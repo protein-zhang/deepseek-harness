@@ -45,4 +45,4 @@ worktrees/
 .typert-*/
 .pnpm-tmp/
 manager/*
-start-dsh.bat
+zz-start-dsh.bat
