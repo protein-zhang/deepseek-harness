@@ -9,7 +9,7 @@ English | [中文](README.zh.md)
 
 ## Summary
 
-`dsh-tool-lsp` gives the model a single read-only `lsp` tool for precise code navigation over the LSP seam: go to a symbol's definition, find its references, jump to its implementations, or read hover documentation. The tool owns everything the model sees — name, schema, prompt guidance, result formatting, and UI presentation — and never depends on which language server backs a query. Positions are one-based UTF-16 cursor coordinates, which the tool converts to the seam's zero-based convention. Results are bounded location lists or normalized hover text with explicit no-result and truncation markers. Compose it with a provider such as `dsh-lsp-stdio` and the `dsh-lsp` seam to activate navigation.
+`dsh-tool-lsp` lets a model navigate code through one read-only `lsp` tool: open a symbol's definition, find references and implementations, or read hover documentation. Requests use one-based UTF-16 line and character positions. Navigation results are bounded, grouped by file, and labeled when locations are omitted or text is truncated; hover results are normalized and distinguish missing information from errors. The package requires a configured LSP provider and a session workspace root. Choose it when textual search is ambiguous or a change needs precise symbol relationships; ordinary navigation should continue to use `search` and `read`.
 
 ## Table of Contents
 
@@ -75,7 +75,6 @@ This section explains the design decisions behind the tool and where the code re
 | [`src/index.ts`](src/index.ts) | Plugin entry: config schema, tool registration, system-prompt section, execution |
 | [`src/render.ts`](src/render.ts) | Pure formatting, coordinate conversion, URI resolution, result caps, UI presentation |
 | [`src/session-cwd.ts`](src/session-cwd.ts) | Workspace root from the session `header.cwd` |
-| — | No runtime invariant companion is published; this stateless adapter contributes one tool and prompt section, while query lifecycle and result relations remain owned by the tool and LSP seams it composes. |
 
 </details>
 

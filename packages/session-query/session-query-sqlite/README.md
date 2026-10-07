@@ -9,7 +9,7 @@ English | [中文](README.zh.md)
 
 ## Summary
 
-`dsh-session-query-sqlite` searches session history with a SQLite FTS5 index and returns ranked, cursor-paginated results grouped by session or within one session. Mount it together with `dsh-session-query` and you get full-text search plus the whole query surface — exact reads, filters, and traces — at once. Live sessions are indexed from memory and persisted sessions from a dedicated derived-index database, so results always reflect the newest state without touching the session-persistence store. Search is opt-in and off by default in shipped compositions: `openAt` decides whether the index opens at startup, at the first search, or never. Setup and usage come first; the implementation internals live in a collapsible developer section below.
+Use this package to add ranked SQLite FTS5 search across session history, either across sessions or within one session, with cursor pagination. It indexes live and persisted history in a separate derived database, so searches reflect current state without modifying the session-persistence store. Exact reads, filters, and traces remain available through the same query API. Search is opt-in in shipped compositions; configure `openAt` to open the index at startup, on first search, or never. Results match tokens and phrases rather than arbitrary substrings, and each index path has a single process owner.
 
 ## Table of Contents
 
@@ -98,7 +98,6 @@ The design history lives in the [SQLite FTS5 session search note](../../../.agen
 | [`src/index.ts`](src/index.ts) | Service: config, openAt lifecycle, serialized reconciliation, query execution, cursors |
 | [`src/query.ts`](src/query.ts) | Request normalization, parameterized predicates, snippets, predicate and binding budgets |
 | [`src/schema.ts`](src/schema.ts) | Database schema, application-id ownership, in-place reset, owner-only file creation |
-| — | No runtime invariant companion is published; reconciliation, cursor generations, and derived-index ownership are validated at each serialized query boundary. |
 
 ### Index lifecycle
 
