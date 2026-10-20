@@ -39,7 +39,6 @@ packages/**/__pycache__/
 apps/web/dist/
 .artifacts/
 .dsh-build/
-.dsh-report/
 .playwright-mcp/
 .orig
 .worktrees/
@@ -49,4 +48,11 @@ worktrees/
 .pnpm-tmp/
 manager/*
 zz-start-dsh.bat
+zz-start-dsh-desktop.bat
+zz-start-dsh-desktop.cmd
+zz-start-dsh-desktop-preflight.mjs
+sync-plugins.ps1
+zz-desktop-cli.mjs
+zz-verify-desktop-profile.mjs
+.migration-backup/
 native/system/test/bin/
