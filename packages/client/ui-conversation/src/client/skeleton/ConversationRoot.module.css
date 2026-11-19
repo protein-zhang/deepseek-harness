@@ -632,11 +632,21 @@
 }
 
 /* Hero: the composer sits inside the session scroll body; center there so
-   the tree seat matches active (sticky footer) without a Root remount. */
+   the tree seat matches active (sticky footer) without a Root remount. The
+   body's end alignment only matters once the centered stack outgrows the
+   scrollport: the seat's `margin-block: auto` centers a stack that fits, and
+   those margins collapse to zero under negative free space, so the end
+   alignment keeps the seat's floor — workspace row and input card — visible
+   instead of leaving it below the fold at scrollTop 0. */
 .root[data-phase='hero'] .scrollBody,
 .embeddedBody[data-content-phase='hero'] .scrollBody {
-  justify-content: center;
+  justify-content: flex-end;
   overflow-y: auto;
+}
+
+.root[data-phase='hero'] .composerSeat,
+.embeddedBody[data-content-phase='hero'] .composerSeat {
+  margin-block: auto;
 }
 
 /* Settling (session replaying, hero/docked unknown): keep the composer seat

@@ -43,6 +43,23 @@ describe('docked composer seat styles', () => {
   })
 })
 
+describe('hero composer seat styles', () => {
+  const heroSeat = rule(conversationCss, ".root[data-phase='hero'] .composerSeat,")
+  const heroScroll = rule(conversationCss, ".root[data-phase='hero'] .scrollBody,")
+
+  it('keeps the input card on screen when the centered stack outgrows the scrollport', () => {
+    // Auto block margins center a stack that fits and collapse to zero under
+    // negative free space; the body's end alignment then keeps the seat's
+    // floor (workspace row + input card) inside the scrollport.
+    expect(heroSeat).toMatch(/margin-block:\s*auto;/)
+    expect(heroScroll).toMatch(/justify-content:\s*flex-end;/)
+  })
+
+  it('does not pin the seat with sticky, which cannot shift an oversized seat', () => {
+    expect(heroSeat).not.toMatch(/position:\s*sticky;/)
+  })
+})
+
 describe('composer statistics row styles', () => {
   it('reserves one reading row in the docked composer only', () => {
     expect(rule(inputBarCss, '.root:not(.hero) > .dock'))
